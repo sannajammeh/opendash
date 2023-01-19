@@ -7,3 +7,14 @@
     color-scheme: dark;
   }
 }
+
+.dark {
+  @apply bg-radix-slate1;
+  @apply text-radix-slate12;
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-radix-slate1;
+  @apply text-radix-slate12;
+}

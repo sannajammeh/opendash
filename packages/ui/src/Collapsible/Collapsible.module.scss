@@ -1,0 +1,12 @@
+.Trigger {
+  &[data-state="open"] {
+    @apply bg-radix-slate5;
+    .Indicator {
+      @apply rotate-90;
+    }
+  }
+}
+
+.Indicator {
+  @apply transition-transform duration-200;
+}

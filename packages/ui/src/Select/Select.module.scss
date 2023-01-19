@@ -1,0 +1,102 @@
+.SelectTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 15px;
+  font-size: 13px;
+  line-height: 1;
+  height: 35px;
+  gap: 5px;
+  @apply bg-radix-slate2 border border-radix-slate6;
+  @apply text-radix-blue11;
+  box-shadow: 0 2px 10px var(--blackA7);
+  outline: none;
+}
+.SelectTrigger:hover {
+  @apply bg-radix-slate3;
+}
+.SelectTrigger:focus {
+  box-shadow: 0 0 0 2px var(--slate6);
+}
+.SelectTrigger[data-placeholder] {
+  @apply text-radix-blue9;
+}
+
+.SelectIcon {
+  @apply text-radix-blue11;
+}
+
+.SelectContent {
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35),
+    0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+  @apply bg-radix-slate2 border border-radix-slate6;
+}
+
+.SelectViewport {
+  padding: 5px;
+}
+
+.SelectItem {
+  font-size: 13px;
+  line-height: 1;
+  @apply text-radix-blue11;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  padding: 0 35px 0 25px;
+  position: relative;
+  user-select: none;
+}
+.SelectItem[data-disabled] {
+  @apply text-radix-slate8;
+  pointer-events: none;
+}
+.SelectItem[data-highlighted] {
+  outline: none;
+  @apply bg-radix-blue9;
+  @apply text-radix-blue1;
+}
+
+.SelectButton {
+  &:hover {
+    outline: none;
+    @apply bg-radix-blue9;
+    @apply text-radix-blue1;
+  }
+}
+
+.SelectLabel {
+  padding: 0 25px;
+  font-size: 12px;
+  line-height: 25px;
+  @apply text-radix-slate11;
+}
+
+.SelectSeparator {
+  height: 1px;
+  @apply bg-radix-blue6;
+  margin: 5px;
+}
+
+.SelectItemIndicator {
+  position: absolute;
+  left: 0;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SelectScrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  @apply bg-radix-slate2;
+  @apply text-radix-blue11;
+  cursor: default;
+}
