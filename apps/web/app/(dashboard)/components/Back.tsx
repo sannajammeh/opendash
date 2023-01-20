@@ -7,7 +7,7 @@ import { IconButton } from "ui";
 export const Back = ({ href }: { href?: string }) => {
   const router = useRouter();
   const icon = (
-    <ArrowLeftIcon className="group-hover:-translate-x-[2px] transition-all" />
+    <ArrowLeftIcon className="group-hover:-translate-x-[1px] transition-all" />
   );
 
   if (href) {

@@ -79,7 +79,6 @@ export const getRouteConfig = (pathname?: string, pageProps?: NextAppProps) => {
 
 export const useRouteConfig = (pageProps?: NextAppProps) => {
   const pathname = usePathname();
-  // console.log(Object.fromEntries(useSearchParams().entries()));
   return useMemo(
     () => getRouteConfig(pathname ?? undefined, pageProps),
     [pathname, pageProps]
