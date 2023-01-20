@@ -11,5 +11,11 @@ module.exports = {
     fontLoaders: [
       { loader: "@next/font/google", options: { subsets: ["latin"] } },
     ],
+    serverComponentsExternalPackages: [
+      "swr",
+      "swr/_internal",
+      "trpc-swr",
+      "trpc-swr/ssg",
+    ],
   },
 };

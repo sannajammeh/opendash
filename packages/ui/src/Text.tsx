@@ -29,6 +29,14 @@ export const Text = classed("span", {
       "semi-bold": "font-semibold",
       black: "font-black",
     },
+
+    block: {
+      true: "block",
+    },
+
+    center: {
+      true: "text-center",
+    },
   },
 
   defaultVariants: {
