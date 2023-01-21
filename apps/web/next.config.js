@@ -7,15 +7,8 @@ module.exports = {
   experimental: {
     esmExternals: true,
     appDir: true,
-    runtime: "edge",
     fontLoaders: [
       { loader: "@next/font/google", options: { subsets: ["latin"] } },
-    ],
-    serverComponentsExternalPackages: [
-      "swr",
-      "swr/_internal",
-      "trpc-swr",
-      "trpc-swr/ssg",
     ],
   },
 };

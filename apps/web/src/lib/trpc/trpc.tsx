@@ -26,10 +26,3 @@ export const ApiProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [client] = useState(() => api.createClient());
   return <api.Provider client={client}>{children}</api.Provider>;
 };
-
-export const SWRConfig = ({
-  children,
-  ...rest
-}: React.ComponentProps<typeof api.SWRConfig>) => {
-  return <api.SWRConfig {...rest}>{children}</api.SWRConfig>;
-};

@@ -10,7 +10,7 @@ if (!globalThis.URLPattern) {
 
 import { Raleway } from "@next/font/google";
 import Providers from "./providers";
-const raleway = Raleway({ subsets: ["latin"], preload: false });
+const raleway = Raleway({ subsets: ["latin"], preload: true });
 
 /* eslint-disable @next/next/no-head-element */
 
