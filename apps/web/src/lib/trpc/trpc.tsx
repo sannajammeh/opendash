@@ -1,21 +1,29 @@
 "use client";
 import SuperJSON from "superjson";
 import { createSWRProxyHooks } from "trpc-swr";
-import { httpBatchLink } from "@trpc/client";
+import { CreateTRPCClientOptions, httpBatchLink } from "@trpc/client";
 import type { AppRouter } from "src/server/root";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import React, { useState } from "react";
+import { auth } from "../auth";
+import { getBaseUrl } from "./utils";
 
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
-  return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
-};
-
-export const api = createSWRProxyHooks<AppRouter>({
+export const trpcClientSettings = {
   transformer: SuperJSON,
-  links: [httpBatchLink({ url: `${getBaseUrl()}/api/trpc` })],
-});
+  links: [
+    httpBatchLink({
+      url: `${getBaseUrl()}/api/trpc`,
+      async headers() {
+        const access_token = await auth.getIdToken();
+        return {
+          Authorization: `Bearer ${access_token}`,
+        };
+      },
+    }),
+  ],
+} satisfies CreateTRPCClientOptions<AppRouter>;
+
+export const api = createSWRProxyHooks<AppRouter>(trpcClientSettings);
 
 export type RouterInputs = inferRouterInputs<AppRouter>;
 export type RouterOutputs = inferRouterOutputs<AppRouter>;

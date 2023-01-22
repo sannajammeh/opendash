@@ -6,3 +6,7 @@ export default createNextApiHandler({
   router: appRouter,
   createContext: createTRPCNextContext,
 });
+
+export const config = {
+  runtime: "nodejs",
+};

@@ -1,40 +1,15 @@
 import React from "react";
-import { Button, classed, Input, Spacer, Text } from "ui";
-import { FiLogIn } from "react-icons/fi";
+import LoginForm from "./LoginForm";
 
 const Login = () => {
   return (
     <div className="h-screen grid place-items-center">
-      <form className="w-[90vw] max-w-[400px] bg-radix-slate2 py-6 px-6 rounded-md">
+      <div className="w-[90vw] max-w-[400px] bg-radix-slate2 py-6 px-6 rounded-md">
         <div className="flex justify-center mb-4">
           <TempLogo />
         </div>
-        <Text block as="h1" center size="title" weight="medium">
-          Log in to OpenDash
-        </Text>
-        <Spacer />
-
-        <Label htmlFor="email">
-          <span className="min-w-[30%]">Email</span>
-          <Input id="email" name="email" type="email" />
-        </Label>
-        <Spacer />
-        <Label htmlFor="password">
-          <span className="min-w-[30%]">Password</span>
-          <Input id="password" name="password" type="password" />
-        </Label>
-        <Spacer />
-        <Button
-          icon={<FiLogIn />}
-          space="center"
-          className="w-full"
-          color="secondary"
-          size="2"
-          variant="flat"
-        >
-          Login
-        </Button>
-      </form>
+        <LoginForm />
+      </div>
     </div>
   );
 };
@@ -73,11 +48,3 @@ const TempLogo = () => {
     </svg>
   );
 };
-
-const Label = classed("label", Text, {
-  base: "flex flex-col md:flex-row md:items-center gap-1 md:gap-6",
-  defaultVariants: {
-    size: 2,
-    weight: "medium",
-  },
-});

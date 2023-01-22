@@ -1,0 +1,37 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "module": "./dist/index.mjs",
+    "import": "./dist/index.mjs"
+  },
+  "files": [
+    "dist",
+    "./prisma"
+  ],
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
+  "scripts": {
+    "dev": "bunchee index.ts -w -f esm",
+    "build": "bunchee index.ts -f esm",
+    "prebuild": "prisma generate",
+    "predev": "prisma generate"
+  },
+  "keywords": [],
+  "author": "Sanna Jammeh",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "bunchee": "^2.2.0",
+    "prisma": "^4.9.0",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.9.0"
+  }
+}
