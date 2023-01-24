@@ -12,20 +12,80 @@ datasource db {
 }
 
 model User {
-  id          Int        @id @default(autoincrement())
-  email       String     @unique
-  password    String
-  name        String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  Workspace   Workspace? @relation(fields: [workspaceId], references: [id])
-  workspaceId Int?
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workspace  Workspace[] @relation(name: "workspace-owned")
+  workspaces Workspace[] @relation(name: "workspace_users")
+  Session    Session[]
 }
 
 model Workspace {
-  id        Int      @id @default(autoincrement())
-  name      String
+  id      Int    @id @default(autoincrement())
+  name    String
+  owner   User   @relation(name: "workspace-owned", fields: [ownerId], references: [id])
+  ownerId Int
+  users   User[] @relation(name: "workspace_users")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User[]
+  apps      App[]
+}
+
+model App {
+  id          Int       @id @default(autoincrement())
+  name        String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  pages       Page[]
+}
+
+model Page {
+  id        Int      @id @default(autoincrement())
+  name      String
+  app       App      @relation(fields: [appId], references: [id])
+  appId     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  queries   Query[]
+}
+
+model Query {
+  id        Int      @id @default(autoincrement())
+  name      String
+  page      Page     @relation(fields: [pageId], references: [id])
+  pageId    Int
+  query     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DataSource {
+  id          Int      @id @default(autoincrement())
+  name        String
+  type        String
+  connected   Boolean
+  editable    Boolean
+  credentials Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Sessions
+model Session {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       Int
+  expiresAt    DateTime
+  refreshToken String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, refreshToken])
 }

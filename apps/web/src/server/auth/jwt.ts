@@ -37,7 +37,7 @@ export const createRefreshToken = async (user: Pick<User, "id">) => {
     .setProtectedHeader({ alg })
     .setSubject(user.id.toString())
     .setIssuedAt()
-    .setExpirationTime("7d")
+    .setExpirationTime("30d")
     .sign(secret);
 
   return token;

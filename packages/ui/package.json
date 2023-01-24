@@ -1,5 +1,5 @@
 {
-  "name": "ui",
+  "name": "@opendash/ui",
   "version": "0.0.0",
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.0.1",
+    "@radix-ui/react-dropdown-menu": "^2.0.2",
     "@radix-ui/react-icons": "^1.1.1",
     "@radix-ui/react-select": "^1.2.0",
     "@tw-classed/react": "1.4.0-canary.5",

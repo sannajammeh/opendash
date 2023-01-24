@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Input } from "ui";
+import { Input } from "@opendash/ui";
 
 const DisplayNameInput = ({ displayName }: { displayName: string }) => {
   const [value, setValue] = useState(displayName);

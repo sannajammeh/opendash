@@ -9,22 +9,22 @@
   height: 35px;
   gap: 5px;
   @apply bg-radix-slate2 border border-radix-slate6;
-  @apply text-radix-blue11;
+  @apply text-radix-slate11;
   box-shadow: 0 2px 10px var(--blackA7);
   outline: none;
-}
-.SelectTrigger:hover {
-  @apply bg-radix-slate3;
-}
-.SelectTrigger:focus {
-  box-shadow: 0 0 0 2px var(--slate6);
-}
-.SelectTrigger[data-placeholder] {
-  @apply text-radix-blue9;
+  &:hover {
+    @apply bg-radix-slate3;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px var(--slate6);
+  }
+  &[data-placeholder] {
+    @apply text-radix-slate9;
+  }
 }
 
 .SelectIcon {
-  @apply text-radix-blue11;
+  @apply text-radix-slate11;
 }
 
 .SelectContent {
@@ -42,7 +42,7 @@
 .SelectItem {
   font-size: 13px;
   line-height: 1;
-  @apply text-radix-blue11;
+  @apply text-radix-slate11;
   border-radius: 3px;
   display: flex;
   align-items: center;
@@ -50,22 +50,22 @@
   padding: 0 35px 0 25px;
   position: relative;
   user-select: none;
-}
-.SelectItem[data-disabled] {
-  @apply text-radix-slate8;
-  pointer-events: none;
-}
-.SelectItem[data-highlighted] {
-  outline: none;
-  @apply bg-radix-blue9;
-  @apply text-radix-blue1;
+  &[data-disabled] {
+    color: var(--slate8) !important;
+    pointer-events: none;
+  }
+  &[data-highlighted] {
+    outline: none;
+    @apply bg-radix-slate6;
+    @apply text-radix-slate12;
+  }
 }
 
 .SelectButton {
   &:hover {
     outline: none;
-    @apply bg-radix-blue9;
-    @apply text-radix-blue1;
+    @apply bg-radix-slate6;
+    @apply text-radix-slate12;
   }
 }
 
@@ -78,7 +78,7 @@
 
 .SelectSeparator {
   height: 1px;
-  @apply bg-radix-blue6;
+  @apply bg-radix-slate6;
   margin: 5px;
 }
 
@@ -91,12 +91,81 @@
   justify-content: center;
 }
 
-.SelectScrollButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 25px;
-  @apply bg-radix-slate2;
-  @apply text-radix-blue11;
-  cursor: default;
+.blue {
+  &.SelectTrigger {
+    @apply text-radix-blue11;
+    &[data-placeholder] {
+      @apply text-radix-blue9;
+    }
+  }
+  .SelectIcon {
+    @apply text-radix-blue11;
+  }
+
+  .SelectItem {
+    @apply text-radix-blue11;
+
+    &[data-highlighted] {
+      @apply bg-radix-blue6;
+      @apply text-radix-blue12;
+    }
+  }
+
+  .SelectSeparator {
+    @apply bg-radix-blue8;
+  }
+
+  .SelectScrollButton {
+    @apply text-radix-blue11;
+  }
+
+  .SelectLabel {
+    @apply text-radix-blue11;
+  }
+
+  .SelectButton {
+    &:hover {
+      @apply bg-radix-blue6;
+      @apply text-radix-blue12;
+    }
+  }
+}
+
+.violet {
+  &.SelectTrigger {
+    @apply text-radix-violet11;
+    &[data-placeholder] {
+      @apply text-radix-violet9;
+    }
+  }
+  .SelectIcon {
+    @apply text-radix-violet11;
+  }
+
+  .SelectItem {
+    @apply text-radix-violet11;
+    &[data-highlighted] {
+      @apply bg-radix-violet6;
+      @apply text-radix-violet12;
+    }
+  }
+
+  .SelectSeparator {
+    @apply bg-radix-violet8;
+  }
+
+  .SelectScrollButton {
+    @apply text-radix-violet11;
+  }
+
+  .SelectLabel {
+    @apply text-radix-violet11;
+  }
+
+  .SelectButton {
+    &:hover {
+      @apply bg-radix-violet6;
+      @apply text-radix-violet12;
+    }
+  }
 }

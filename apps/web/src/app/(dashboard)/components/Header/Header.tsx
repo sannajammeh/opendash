@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useUser } from "src/context/AuthContext";
-import { Flex, Text } from "ui";
+import { Flex, Text } from "@opendash/ui";
 import { useAppContext } from "../../AppContext";
 import { useRouteConfig } from "../../route.config";
 

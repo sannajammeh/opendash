@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 import { FiFolder, FiPackage } from "react-icons/fi";
-import { Button, Card, Flex, Input, Spacer, Text } from "ui";
+import { Button, Card, Flex, Input, Spacer, Text } from "@opendash/ui";
 import { NextAppPage } from "../../../../../../next-types";
 import { AppContainer } from "../../../components/AppContainer";
 import { Team, teams } from "../../data";
@@ -42,7 +42,7 @@ const AppPage: NextAppPage<
         <Spacer />
         <Input
           placeholder="Search for a page..."
-          className="w-full bg-radix-slate1"
+          className="w-full !bg-radix-slate1"
         />
         <Spacer />
         <Card bordered>

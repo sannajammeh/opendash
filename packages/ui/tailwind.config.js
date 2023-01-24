@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const radixColors = require("@radix-ui/colors");
 
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],

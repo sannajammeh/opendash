@@ -77,17 +77,27 @@ const SelectButton = deriveClassed<typeof ButtonItem>(
 
 interface SelectProps extends SelectPrimitive.SelectProps {
   className?: string;
+  color?: keyof typeof colors;
 }
 
-const _Select = ({ children, className, ...props }: SelectProps) => {
+const colors = {
+  blue: classes.blue,
+  violet: classes.violet,
+};
+
+const _Select = ({ children, className, color, ...props }: SelectProps) => {
   return (
     <SelectRoot {...props}>
-      <SelectTrigger className={className}>
+      <SelectTrigger className={clsx(className, color && colors[color])}>
         <SelectValue />
         <SelectIcon />
       </SelectTrigger>
       <SelectPortal>
-        <SelectContent position="popper" sideOffset={5}>
+        <SelectContent
+          className={clsx(color && colors[color])}
+          position="popper"
+          sideOffset={5}
+        >
           <SelectScrollupButton />
           <SelectViewport>{children}</SelectViewport>
           <SelectScrolldownButton />
@@ -104,3 +114,5 @@ _Select.Label = SelectLabel;
 _Select.Button = SelectButton;
 
 export const Select = _Select;
+
+export { SelectPrimitive };

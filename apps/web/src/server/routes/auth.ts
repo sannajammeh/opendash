@@ -5,6 +5,7 @@ import { TRPCError } from "@trpc/server";
 import { createToken, verifyIdToken, createRefreshToken } from "../auth/jwt";
 import { User } from "db";
 import { exclude } from "src/utils/data";
+import dayjs from "dayjs";
 
 const registerSchema = z.object({
   email: z.string().email(),
@@ -41,9 +42,18 @@ export const authRouter = t.router({
         },
       });
 
+      const refreshToken = await createRefreshToken(user);
+      await prisma.session.create({
+        data: {
+          userId: user.id,
+          refreshToken: refreshToken,
+          expiresAt: dayjs().add(30, "day").toDate(),
+        },
+      });
+
       return {
         access_token: await createToken(user),
-        refresh_token: await createRefreshToken(user),
+        refresh_token: refreshToken,
         user: exclude(user, "password"),
       };
     }),
@@ -72,6 +82,15 @@ export const authRouter = t.router({
           code: "UNAUTHORIZED",
         });
 
+      const refreshToken = await createRefreshToken(user);
+      await ctx.prisma.session.create({
+        data: {
+          userId: user.id,
+          refreshToken: refreshToken,
+          expiresAt: dayjs().add(30, "day").toDate(),
+        },
+      });
+
       return {
         access_token: await createToken(user),
         refresh_token: await createRefreshToken(user),
@@ -85,6 +104,18 @@ export const authRouter = t.router({
       user: exclude(user, "password"),
     };
   }),
+
+  revokeRefreshToken: t.procedure
+    .input(z.string())
+    .mutation(async ({ input, ctx }) => {
+      await ctx.prisma.session.delete({
+        where: {
+          refreshToken: input,
+        },
+      });
+
+      return true;
+    }),
 
   // Refresh token
   refresh: t.procedure.input(z.string()).query(async ({ input, ctx }) => {
@@ -101,10 +132,42 @@ export const authRouter = t.router({
         code: "UNAUTHORIZED",
       });
 
+    const session = await ctx.prisma.session.findFirst({
+      where: {
+        userId: user.id,
+        refreshToken: input,
+        expiresAt: {
+          gte: new Date(),
+        },
+      },
+    });
+
+    if (!session)
+      throw new TRPCError({
+        message: "Invalid credentials",
+        code: "UNAUTHORIZED",
+      });
+
+    const { refresh_token, access_token } = await createTokens(user);
+
+    // Delete old refresh token
+    await ctx.prisma.session.delete({
+      where: {
+        id: session.id,
+      },
+    });
+
     return {
-      access_token: await createToken(user),
-      refresh_token: await createRefreshToken(user),
+      access_token: access_token,
+      refresh_token: refresh_token,
       user: exclude(user, "password"),
     };
   }),
 });
+
+const createTokens = async (user: Omit<User, "password">) => {
+  return {
+    access_token: await createToken(user),
+    refresh_token: await createRefreshToken(user),
+  };
+};

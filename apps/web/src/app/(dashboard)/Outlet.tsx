@@ -1,6 +1,6 @@
 "use client";
 import React, { PropsWithChildren } from "react";
-import { classed } from "ui";
+import { classed } from "@opendash/ui";
 import { useRouteConfig } from "./route.config";
 
 type Props = {};

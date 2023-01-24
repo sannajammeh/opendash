@@ -67,6 +67,12 @@ export const getRouteConfig = (pathname?: string, pageProps?: NextAppProps) => {
         elevated: true,
       })
     )
+    .with({ pathname: "/" }, () => ({
+      title: "Home",
+      segment: null,
+      elevated: true,
+      icon: <FiHome />,
+    }))
 
     .otherwise(() => ({
       title: "Home",

@@ -19,6 +19,7 @@ export const Text = classed("span", {
     color: {
       slate: "text-radix-slate11",
       blue: "text-radix-blue11",
+      red: "text-radix-red11",
     },
 
     weight: {

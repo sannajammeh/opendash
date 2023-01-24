@@ -1,4 +1,8 @@
-import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
+import {
+  createTRPCProxyClient,
+  httpBatchLink,
+  TRPCClientError,
+} from "@trpc/client";
 import type { AppRouter } from "src/server/root";
 import SuperJSON from "superjson";
 import type { RouterOutputs } from "./trpc";
@@ -46,7 +50,6 @@ export interface Session {
 }
 
 export interface AuthState {
-  user: Session["user"] | null;
   session: Session | null;
   loading: boolean;
 }
@@ -62,7 +65,6 @@ export class AuthClient {
   config: Required<AuthOptions>;
   constructor({ storageKey = "od:auth:token" }: AuthOptions = {}) {
     this.state = Observable<AuthState, AuthChangeEvent>({
-      user: null,
       session: null,
       loading: true,
     });
@@ -106,7 +108,6 @@ export class AuthClient {
 
     this.state.set(
       {
-        user: session.user,
         session,
         loading: false,
       },
@@ -125,7 +126,6 @@ export class AuthClient {
 
     this.state.set(
       {
-        user: session.user,
         session,
         loading: false,
       },
@@ -136,14 +136,15 @@ export class AuthClient {
   }
 
   async signOut() {
+    const refreshToken = this.state.get().session?.refresh_token;
     this.state.set(
       {
-        user: null,
         session: null,
         loading: false,
       },
       "SIGNED_OUT"
     );
+    if (refreshToken) await api.auth.revokeRefreshToken.mutate(refreshToken);
   }
 
   async getIdToken() {
@@ -159,29 +160,40 @@ export class AuthClient {
       if (expired) await this.refreshSession(session);
       this.state.set(
         {
-          user: session.user,
           session,
           loading: false,
         },
         "SIGNED_IN"
+      );
+    } else {
+      this.state.set(
+        {
+          ...this.state.get(),
+          loading: false,
+        },
+        "SIGNED_OUT"
       );
     }
   }
 
   private async refreshSession(session: Session | null) {
     if (!session) return null;
-    const newSession = await api.auth.refresh.query(session.refresh_token);
+    try {
+      const newSession = await api.auth.refresh.query(session.refresh_token);
+      this.state.set(
+        {
+          session: newSession,
+          loading: false,
+        },
+        "SIGNED_IN"
+      );
+    } catch (error: any) {
+      if (error.code === "UNAUTHORIZED") {
+        this.signOut();
+      }
 
-    this.state.set(
-      {
-        user: newSession.user,
-        session: newSession,
-        loading: false,
-      },
-      "SIGNED_IN"
-    );
-
-    return newSession;
+      return null;
+    }
   }
 
   private _checkExists() {

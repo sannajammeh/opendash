@@ -28,6 +28,7 @@ const CardHeader = classed("header", "card-header");
 const CardBody = classed("div", {
   variants: {
     size: {
+      0: "p-0",
       small: "p-3",
       medium: "p-4",
       large: "p-5",

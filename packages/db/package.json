@@ -16,10 +16,9 @@
     "schema": "./prisma/schema.prisma"
   },
   "scripts": {
-    "dev": "bunchee index.ts -w -f esm",
-    "build": "bunchee index.ts -f esm",
-    "prebuild": "prisma generate",
-    "predev": "prisma generate"
+    "generate": "prisma generate",
+    "dev": "pnpm run generate && bunchee index.ts -w -f esm",
+    "build": "pnpm run generate && bunchee index.ts -f esm"
   },
   "keywords": [],
   "author": "Sanna Jammeh",

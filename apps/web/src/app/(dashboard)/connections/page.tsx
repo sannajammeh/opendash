@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Text } from "ui";
+import { Card, Text } from "@opendash/ui";
 import { AppContainer } from "../components/AppContainer";
 import { connections } from "./data";
 import { matchConnectionIcon } from "./utils";

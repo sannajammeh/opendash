@@ -1,9 +1,11 @@
-import { authRouter, exampleRouter } from "./routes";
+import { authRouter, workspaceRouter } from "./routes";
+import { appsRouter } from "./routes/appsRouter";
 import { t } from "./trpc";
 
 export const appRouter = t.router({
-  example: exampleRouter,
   auth: authRouter,
+  workspace: workspaceRouter,
+  apps: appsRouter,
 });
 
 /**

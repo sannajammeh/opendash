@@ -10,7 +10,7 @@ import {
   CollapsibleRoot,
   CollapsibleTrigger,
   Flex,
-} from "ui";
+} from "@opendash/ui";
 import { teams } from "../../apps/data";
 import { connections } from "../../connections/data";
 

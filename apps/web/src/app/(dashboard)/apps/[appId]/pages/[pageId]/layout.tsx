@@ -1,6 +1,6 @@
 import React from "react";
 import { FiPackage } from "react-icons/fi";
-import { AppBar } from "ui";
+import { AppBar } from "@opendash/ui";
 import { NextAppLayout } from "next-types";
 import { Back } from "src/app/(dashboard)/components/Back";
 import { getPage } from "src/app/(dashboard)/apps/data";

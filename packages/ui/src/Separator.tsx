@@ -8,6 +8,7 @@ export const Separator = classed.hr("block", {
     },
 
     size: {
+      0: "my-0",
       1: "my-1",
       2: "my-2",
       3: "my-3",

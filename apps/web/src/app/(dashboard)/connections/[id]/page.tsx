@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import React from "react";
 import { FiSettings, FiTrash } from "react-icons/fi";
-import { Button, classed, Flex, Spacer, Text } from "ui";
+import { Button, classed, Flex, Spacer, Text } from "@opendash/ui";
 import { NextAppPage } from "../../../../../next-types";
 import { Back } from "../../components/Back";
 import { connections } from "../data";

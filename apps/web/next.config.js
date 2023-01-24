@@ -3,7 +3,7 @@
  */
 module.exports = {
   reactStrictMode: true,
-  transpilePackages: ["ui"],
+  transpilePackages: ["@openbase/ui", "@openbase/hooks"],
   experimental: {
     esmExternals: true,
     appDir: true,

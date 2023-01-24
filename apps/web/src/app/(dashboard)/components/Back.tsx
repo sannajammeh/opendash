@@ -2,7 +2,7 @@
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { IconButton } from "ui";
+import { IconButton } from "@opendash/ui";
 
 export const Back = ({ href }: { href?: string }) => {
   const router = useRouter();

@@ -1,12 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiLogIn } from "react-icons/fi";
-import { Button, classed, Input, Spacer, Text } from "ui";
+import { Button, classed, Input, Spacer, Text } from "@opendash/ui";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import useSWRMutation from "swr/mutation";
-import { auth } from "src/lib/auth";
+import useSWRMutation, { MutationFetcher } from "swr/mutation";
+import { auth, Session } from "src/lib/auth";
+import { TRPCClientError, TRPCClientErrorLike } from "@trpc/client";
+import { AppRouter } from "src/server/root";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const registerSchema = z.object({
   email: z.string().email(),
@@ -21,8 +24,22 @@ const loginSchema = z.object({
 
 type Schema = z.infer<typeof registerSchema> | z.infer<typeof loginSchema>;
 
+type AuthMutationArg = Schema & {
+  register?: boolean;
+};
+
+const fetcher = async (_: any, { arg }: { arg: AuthMutationArg }) => {
+  const session = await auth[arg.register ? "signUp" : "signIn"](
+    arg.email,
+    arg.password
+  );
+  return session;
+};
+
 const LoginForm = () => {
+  const searchParams = useSearchParams();
   const [registerMode, setRegister] = useState<boolean>(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -31,46 +48,29 @@ const LoginForm = () => {
     resolver: zodResolver(registerMode ? registerSchema : loginSchema),
   });
 
-  const {
-    data,
-    isMutating: registerLoading,
-    trigger: triggerRegister,
-  } = useSWRMutation<unknown, unknown, string, z.infer<typeof registerSchema>>(
-    "auth.register",
-    async (_, { arg }) => {
-      const session = await auth.signUp(arg.email, arg.password);
-
-      return session;
-    }
-  );
-
-  const {
-    data: loginData,
-    isMutating: loginLoading,
-    trigger: triggerLogin,
-  } = useSWRMutation<unknown, unknown, string, z.infer<typeof loginSchema>>(
-    "auth.login",
-    async (_, { arg }) => {
-      const session = await auth.signIn(arg.email, arg.password);
-
-      return session;
-    }
-  );
-
-  console.log({
-    loginData,
-    registerData: data,
-  });
+  const { data, isMutating, trigger, error } = useSWRMutation<
+    Session,
+    TRPCClientError<AppRouter>,
+    string,
+    AuthMutationArg
+  >("auth.authenticate", fetcher);
 
   const onSubmit: SubmitHandler<Schema> = async (data) => {
-    if (registerMode) {
-      return triggerRegister(data as z.infer<typeof registerSchema>);
-    }
-
-    triggerLogin(data as z.infer<typeof loginSchema>);
+    try {
+      await trigger({
+        ...data,
+        register: registerMode,
+      });
+      router.push(`/${searchParams.get("redirect") ?? ""}`);
+    } catch (error: any) {}
   };
 
-  const isLoading = registerLoading || loginLoading;
+  // Depend on searchParams to preload the redirect
+  useEffect(() => {
+    router.prefetch(`/${searchParams.get("redirect") ?? ""}`);
+  }, [searchParams, router]);
+
+  const isLoading = isMutating;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -79,6 +79,11 @@ const LoginForm = () => {
       </Text>
       <Spacer />
 
+      {error && (
+        <Text block as="p" center color="red" size="2" weight="medium">
+          {error.message}
+        </Text>
+      )}
       <Label htmlFor="email">
         <span className="min-w-[30%]">Email</span>
         <Input
@@ -124,7 +129,7 @@ const LoginForm = () => {
         variant="flat"
         loading={isLoading}
       >
-        Login
+        {!registerMode ? "Login" : "Register"}
       </Button>
       <div className="text-radix-slate11 text-xs mt-2">
         {registerMode ? "Already have an account?" : "Not a user?"}{" "}

@@ -1,7 +1,7 @@
 import { AppContainer } from "src/app/(dashboard)/components/AppContainer";
 import React from "react";
 import { FiPackage, FiFolder } from "react-icons/fi";
-import { Flex, Spacer, Input, Card, Button, Text } from "ui";
+import { Flex, Spacer, Input, Card, Button, Text } from "@opendash/ui";
 
 const Loading = () => {
   return (
