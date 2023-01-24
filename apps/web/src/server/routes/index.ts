@@ -1,2 +1,2 @@
-export * from "./auth";
+export * from "./authRouter";
 export * from "./workspaceRouter";

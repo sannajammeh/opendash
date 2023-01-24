@@ -1,5 +1,4 @@
 import { Card, Spacer, Text } from "@opendash/ui";
-import Link from "next/link";
 import React, { Suspense } from "react";
 import { AppContainer } from "./components/AppContainer";
 import AppsList, { AppsListSkeleton } from "./components/AppsList";
@@ -17,9 +16,7 @@ const Page = async () => {
 
       <Spacer size="10" />
 
-      <Suspense fallback={<AppsListSkeleton />}>
-        <AppsList />
-      </Suspense>
+      <AppsList />
     </AppContainer>
   );
 };

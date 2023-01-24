@@ -2,11 +2,17 @@
   "name": "db",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "types": "dist/index.d.ts",
+  "type": "module",
   "exports": {
-    "module": "./dist/index.mjs",
-    "import": "./dist/index.mjs"
+    ".": {
+      "import": "./dist/index.mjs",
+      "module": "./dist/index.mjs"
+    },
+    "./edge": {
+      "import": "./dist/edge.mjs",
+      "module": "./dist/edge.mjs"
+    }
   },
   "files": [
     "dist",
@@ -16,9 +22,9 @@
     "schema": "./prisma/schema.prisma"
   },
   "scripts": {
-    "generate": "prisma generate",
-    "dev": "pnpm run generate && bunchee index.ts -w -f esm",
-    "build": "pnpm run generate && bunchee index.ts -f esm"
+    "generate": "prisma generate --data-proxy",
+    "dev": "pnpm run generate && bunchee -w -f esm",
+    "build": "pnpm run generate && bunchee -f esm"
   },
   "keywords": [],
   "author": "Sanna Jammeh",
