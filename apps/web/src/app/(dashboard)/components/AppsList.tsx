@@ -7,9 +7,9 @@ import { FiPackage } from "react-icons/fi";
 import { api } from "src/lib/trpc";
 
 const AppsList = () => {
-  const { data: apps } = api.apps.getApps.useSWR(void 0, {
-    suspense: false,
-  });
+  const { data: apps } = api.apps.getApps.useSWR();
+  if (!apps) return <AppsListSkeleton />;
+
   return (
     <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
       {apps?.map((app) => (
@@ -19,7 +19,7 @@ const AppsList = () => {
           className="group hover:scale-105 transition-all duration-300 cursor-pointer"
         >
           <Text weight="semi-bold" className="leading-6">
-            {app.displayName}
+            {(app as any).name}
           </Text>
           <Card
             as="div"
