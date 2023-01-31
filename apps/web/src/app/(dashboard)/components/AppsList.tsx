@@ -8,11 +8,11 @@ import { api } from "src/lib/trpc";
 
 const AppsList = () => {
   const { data: apps } = api.apps.getApps.useSWR(void 0, {
-    suspense: true,
+    suspense: false,
   });
   return (
     <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-      {apps!.map((app) => (
+      {apps?.map((app) => (
         <Link
           key={app.id}
           href={`/apps/${app.id}`}

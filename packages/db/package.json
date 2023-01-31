@@ -28,7 +28,7 @@
     "bunchee": "^2.2.0",
     "prisma": "^4.9.0",
     "tsconfig": "workspace:*",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "@prisma/client": "^4.9.0"

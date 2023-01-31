@@ -39,14 +39,14 @@ export const getRouteConfig = (pathname?: string, pageProps?: NextAppProps) => {
       title: "New workspace",
       icon: <TokensIcon />,
       segment: "workspaces",
-      elevated: true,
+      elevated: false,
     }))
 
     .with({ pathname: "/connections" }, () => ({
       title: "Connections",
       icon: <FiDatabase />,
       segment: "connections",
-      elevated: true,
+      elevated: false,
     }))
     .when(
       ({ pathname }) =>
@@ -64,13 +64,13 @@ export const getRouteConfig = (pathname?: string, pageProps?: NextAppProps) => {
         title: "Apps",
         icon: <Component1Icon />,
         showHeader: false,
-        elevated: true,
+        elevated: false,
       })
     )
     .with({ pathname: "/" }, () => ({
       title: "Home",
       segment: null,
-      elevated: true,
+      elevated: false,
       icon: <FiHome />,
     }))
 
